@@ -12,31 +12,74 @@ bool contains(key) 返回哈希集合中是否存在这个值 key 。
 void remove(key) 将给定值 key 从哈希集合中删除。如果哈希集合中没有这个值，什么也不做
 """
 
+
 class Node:
     def __init__(self, val):
         self.val = val
         self.next = None
 
 
+class LinkedList:
+    def __init__(self, head):
+        self.head = head
+
+    def find_node(self, target: int):
+        tem_cell = self.head
+        while tem_cell and tem_cell.val != target:
+            tem_cell = tem_cell.next
+        return tem_cell
+
+    def find_pre_node(self, target: int):
+        if self.head is None or self.head.val == target:
+            return None
+        tem_cell = self.head
+        while tem_cell.next:
+            if tem_cell.next.val == target:
+                return tem_cell
+            tem_cell = tem_cell.next
+        return None
+
+    def del_node(self, target: int):
+        # 如果要删除的是头元素，需要特殊处理
+        tem_cell = self.find_pre_node(target)
+        if tem_cell is not None:
+            tem_cell.next = tem_cell.next.next
+        else:
+            # 如果要删除的是头结点
+            if self.head and self.head.next:
+                self.head = self.head.next
+            else:
+                self.head = None
+
+    def add(self, target: int):
+        node = Node(target)
+        node.next = self.head
+        self.head = node
+
+
 class MyHashSet:
 
     def __init__(self):
-        pass
+        # 指定你一个 1000 大小的数组
+        self.hash_data = [LinkedList(None) for _ in range(1000)]
 
     def add(self, key: int) -> None:
-        node = Node(key)
-        node.next = self
+        # 如果已经有这个值，那么就不要添加
+        if self.contains(key):
+            return
+        # 找到应该插入的位置，用要插入的数模1000，取到余数，然后余数就是它在数组的位置，如果在这个位置上已经有数据了，那么就用链表的形式
+        locate: int = key % 1000
+        if self.hash_data[locate] is None:
+            self.hash_data[locate] = LinkedList(Node(key))
+        else:
+            self.hash_data[locate].add(key)
 
     def remove(self, key: int) -> None:
-        pass
+        locate: int = key % 1000
+        self.hash_data[locate].del_node(key)
 
     def contains(self, key: int) -> bool:
-        pass
+        locate: int = key % 1000
+        node = self.hash_data[locate].find_node(key)
+        return bool(node)
 
-
-
-# Your MyHashSet object will be instantiated and called as such:
-# obj = MyHashSet()
-# obj.add(key)
-# obj.remove(key)
-# param_3 = obj.contains(key)
