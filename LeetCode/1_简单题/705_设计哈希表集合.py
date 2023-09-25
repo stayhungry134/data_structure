@@ -30,26 +30,24 @@ class LinkedList:
         return tem_cell
 
     def find_pre_node(self, target: int):
-        if self.head is None or self.head.val == target:
-            return None
-        tem_cell = self.head
-        while tem_cell.next:
-            if tem_cell.next.val == target:
-                return tem_cell
-            tem_cell = tem_cell.next
+        current = self.head
+        while current and current.next:
+            if current.next.val == target:
+                return current
+            current = current.next
         return None
 
     def del_node(self, target: int):
-        # 如果要删除的是头元素，需要特殊处理
+        if self.head is None:
+            return
+
+        if self.head.val == target:
+            self.head = self.head.next
+            return
+
         tem_cell = self.find_pre_node(target)
         if tem_cell is not None:
             tem_cell.next = tem_cell.next.next
-        else:
-            # 如果要删除的是头结点
-            if self.head and self.head.next:
-                self.head = self.head.next
-            else:
-                self.head = None
 
     def add(self, target: int):
         node = Node(target)
