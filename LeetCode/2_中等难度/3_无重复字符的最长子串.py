@@ -20,16 +20,16 @@ class Solution:
             for letter in s[cur:]:
                 tem_result += 1
                 if s_dic.get(letter):
-                    s_dic = {}
-                    cur += 1
-                    result = max(tem_result, result)
+                    s_dic = {}  # 清空字典
+                    tem_result = 0  # 重置临时结果
                     continue
+                result = max(tem_result, result)
                 s_dic[letter] = 1
-
+                cur += 1
         return result
 
 
-s = 'abcabcbb'
+s = "jbpnbwwd"
 
 solution = Solution()
 print(solution.lengthOfLongestSubstring(s))
