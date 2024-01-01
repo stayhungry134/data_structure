@@ -14,33 +14,39 @@ Description: 你正在经营一座摩天轮，该摩天轮共有 4 个座舱 ，
 
 
 class Solution:
-    def minOperationsMaxProfit(self, customers: list[int], boardingCost: int, runningCost: int) -> int:
-        profit = [0]  # 利润列表
-        surplus_customer = 0  # 剩余游客
+    def minOperationsMaxProfit(self, customers: List[int], boardingCost: int, runningCost: int) -> int:
+        ans = -1
+        maxProfit = totalProfit = operations = customersCount = 0
+        for c in customers:
+            operations += 1
+            customersCount += c
+            curCustomers = min(customersCount, 4)
+            customersCount -= curCustomers
+            totalProfit += boardingCost * curCustomers - runningCost
+            if totalProfit > maxProfit:
+                maxProfit = totalProfit
+                ans = operations
 
-        for customer in customers:
-            # 将游客加到剩余游客中，然后在后续进行操作
-            surplus_customer += customer
-            # 如果顾客小于 4 个，那么直接坐摩天轮
-            if customer < 4:
-                current_profit = profit[-1] + customer * boardingCost - runningCost
-                profit.append(current_profit)
-            else:
-                current_profit = profit[-1] + 4 * boardingCost - runningCost
-                profit.append(current_profit)
-                surplus_customer -= 4
+        if customersCount == 0:
+            return ans
 
-        return profit.index(max(profit)) + 1
+        profitEachTime = boardingCost * 4 - runningCost
+        if profitEachTime <= 0:
+            return ans
 
+        if customersCount > 0:
+            fullTimes = customersCount // 4
+            totalProfit += profitEachTime * fullTimes
+            operations += fullTimes
+            if totalProfit > maxProfit:
+                maxProfit = totalProfit
+                ans = operations
 
-solution = Solution()
-
-customers = [10, 9, 6]
-boardingCost = 6
-runningCost = 5
-
-result = solution.minOperationsMaxProfit(customers, boardingCost, runningCost)
-
-print(result)
-
+            remainingCustomers = customersCount % 4
+            remainingProfit = boardingCost * remainingCustomers - runningCost
+            totalProfit += remainingProfit
+            if totalProfit > maxProfit:
+                operations += 1
+                ans += 1
+        return ans
 
