@@ -14,6 +14,7 @@ separator 用于决定拆分发生的位置，但它不包含在结果字符串�
 结果字符串必须保持初始相同的先后顺序
 """
 
+
 class Solution:
     def splitWordsBySeparator(self, words: list[str], separator: str) -> list[str]:
         res = []
