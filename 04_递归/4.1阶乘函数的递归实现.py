@@ -5,6 +5,8 @@ author: Ethan
 
 Description: 
 """
+
+
 def factorial(n):
     """
     阶乘函数的递归实现

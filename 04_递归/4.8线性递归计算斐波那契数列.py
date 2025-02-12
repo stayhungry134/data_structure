@@ -5,6 +5,8 @@ author: Ethan
 
 Description: 
 """
+
+
 def good_fibonacci(n):
     """
     递归计算斐波那契数列

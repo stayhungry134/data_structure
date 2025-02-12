@@ -5,6 +5,8 @@ author: Ethan
 
 Description: 
 """
+
+
 def unique3(S, start, stop):
     """
     检查S[start:stop]中的元素是否唯一

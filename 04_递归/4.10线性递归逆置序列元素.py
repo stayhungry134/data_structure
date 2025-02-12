@@ -5,6 +5,8 @@ author: Ethan
 
 Description: 
 """
+
+
 def reverse(S, start, stop):
     """
     递归逆置序列元素

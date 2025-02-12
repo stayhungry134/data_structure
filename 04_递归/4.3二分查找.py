@@ -5,6 +5,8 @@ author: Ethan
 
 Description: 
 """
+
+
 def binary_search(data, target, low, high):
     """
     二分查找
