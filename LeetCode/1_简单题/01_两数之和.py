@@ -5,6 +5,9 @@ author: Ethan
 
 Description: LeetCode 上面的题目，两数之和
 """
+from typing import List
+
+
 def two_sum(nums, target):
     diff_dic = {}
     for i, num in enumerate(nums):
@@ -31,7 +34,7 @@ def two_sum1(nums: list[int], target: int) -> list[int]:
 nums = [1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1]
 target = 11
 
-print(two_sum1(nums, target))
+# print(two_sum1(nums, target))
 
 
 # 2023 年 7 月 2 日
@@ -45,9 +48,20 @@ def two_sum2(nums: list, target: int) -> list:
     return []
 
 
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        tem_dic = {}
+        for i, num in enumerate(nums):
+            diff_num = target - num
+            if tem_dic.get(diff_num) is not None:
+                return [tem_dic.get(diff_num), i]
+            tem_dic[num] = i
+        return []
+
+
 nums = [2, 7, 11, 15]
 target = 9
-
-print(two_sum(nums, target))
+s = Solution()
+print(s.twoSum(nums, target))
 
 
