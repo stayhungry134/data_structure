@@ -9,11 +9,9 @@ from typing import List
 
 class Solution:
     def maxProduct(self, nums: List[int]) -> int:
-        two_num = nums[:2]
-        for num in nums[2: ]:
-            if num > min(two_num):
-                two_num = [num, max(two_num)]
-        return (two_num[0] - 1) * (two_num[1] - 1)
+        sorted_nums = sorted(nums, reverse=True)
+        return (sorted_nums[0] - 1) * (sorted_nums[1] - 1)
 
 
 nums = [3,7]
+print(Solution().maxProduct(nums))
