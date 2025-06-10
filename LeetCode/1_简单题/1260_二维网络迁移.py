@@ -11,19 +11,17 @@ class Solution:
     def shiftGrid(self, grid: List[List[int]], k: int) -> List[List[int]]:
         m = len(grid)
         n = len(grid[0])
-        tem = [[0 for _ in range(n)] for _ in range(m)]
+        tem_grid = [num for row in grid for num in row]
+        tem_k = k % len(tem_grid)
+        pre = [num for num in tem_grid[-tem_k: ]]
+        result_grid = tem_grid[-tem_k:] + tem_grid[:-tem_k]
+        res = []
         for i in range(m):
-            for j in range(n):
-                num = grid[i][j]
-                add_i, add_j = divmod(k, n)
-                # 防止超出行范围
-                add_i1, result_j = divmod((j + add_j), n)
-                result_i = (i + add_i + add_i1) % m
-                tem[result_i][result_j] = num
-        return tem
+            res.append(result_grid[i*n: (i+1)*n])
+        return res[:m]
 
 
-grid = [[1,2,3],[4,5,6],[7,8,9]]
+grid = [[3,8,1,9],[19,7,2,5],[4,6,11,10],[12,0,21,13]]
 k = 1
 
 print(Solution().shiftGrid(grid, k))
