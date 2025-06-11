@@ -5,46 +5,26 @@ author: Ethan
 
 Description: https://leetcode.cn/problems/count-days-spent-together/description/
 """
+from typing import List
 
 
 class Solution:
     def countDaysTogether(self, arriveAlice: str, leaveAlice: str, arriveBob: str, leaveBob: str) -> int:
-        month_days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-        # 先计算谁在前，交叉的天数等于先结束的那个人的结尾，减去后开始的那个人的开头
-        # 比较日期
-        def date_gt(str1: str, str2: str) -> bool:
-            month1, day1 = str1.split('-')
-            month2, day2 = str2.split('-')
-            if int(month1) < int(month2):
-                return False
-            elif int(month1) > int(month2):
-                return True
-            elif int(day1) < int(day2):
-                return False
-            else:
-                return True
-        def diff_date(str1: str, str2: str) -> int:
-            month1, day1 = str1.split('-')
-            month2, day2 = str2.split('-')
-            if month1 < month2:
-                return 0
-            month2 = int(month2)
-            diff_days = int(day1) - int(day2)
-            diff_month = int(month1) - month2
-            diff_month_days = sum(month_days[month2 - 1: month2 + diff_month - 1])
-            res = diff_month_days + diff_days + 1
-            if res < 0:
-                res = 0
-            return res
+        datesOfMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        prefixSum = [0]
+        for date in datesOfMonths:
+            prefixSum.append(prefixSum[-1] + date)
 
-        date1 = leaveAlice  # 先结束的结尾
-        date2 = arriveBob  # 后开始的开头
-        if date_gt(leaveAlice, leaveBob):
-            date1 = leaveBob
-        if date_gt(arriveAlice, arriveBob):
-            date2 = arriveAlice
-
-        return diff_date(date1, date2)
+        arriveAliceDay = self.calculateDayOfYear(arriveAlice, prefixSum)
+        leaveAliceDay = self.calculateDayOfYear(leaveAlice, prefixSum)
+        arriveBobDay = self.calculateDayOfYear(arriveBob, prefixSum)
+        leaveBobDay = self.calculateDayOfYear(leaveBob, prefixSum)
+        return max(0, min(leaveAliceDay, leaveBobDay) - max(arriveAliceDay, arriveBobDay) + 1)
+    # 转换为一年当中的第几天更为简单
+    def calculateDayOfYear(self, day: str, prefixSum: List[int]) -> int:
+        month = int(day[:2])
+        date = int(day[3:])
+        return prefixSum[month - 1] + date
 
 
 arriveAlice = "10-20"
