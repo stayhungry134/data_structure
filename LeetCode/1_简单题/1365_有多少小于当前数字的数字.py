@@ -10,12 +10,17 @@ from typing import List
 
 class Solution:
     def smallerNumbersThanCurrent(self, nums: List[int]) -> List[int]:
+        sorted_nums = sorted(nums, reverse=True)
+        len_nums = len(nums)
         res = []
-        for i in range(len(nums)):
-            cnt = 0
-            for j in range(len(nums)):
-                if j != i and nums[j] < nums[i]:
-                    cnt += 1
-            res.append(cnt)
+        for i in range(len_nums):
+            for j in range(len_nums):
+                if sorted_nums[j] < nums[i]:
+                    res.append(len_nums - j)
+                    break
+                # 如果到最后还是没有找到比它小的数，那么就是0
+                if j == len_nums - 1:
+                    res.append(0)
 
         return res
+
