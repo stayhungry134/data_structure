@@ -10,17 +10,19 @@ from typing import List
 
 class Solution:
     def smallerNumbersThanCurrent(self, nums: List[int]) -> List[int]:
-        sorted_nums = sorted(nums, reverse=True)
-        len_nums = len(nums)
+        sorted_nums = sorted(nums)
+        tem_dic = {}
         res = []
-        for i in range(len_nums):
-            for j in range(len_nums):
-                if sorted_nums[j] < nums[i]:
-                    res.append(len_nums - j)
-                    break
-                # 如果到最后还是没有找到比它小的数，那么就是0
-                if j == len_nums - 1:
-                    res.append(0)
+        # 这里循环之后(从小到大)，就可以得到每一个数字之前有几个比它小的
+        for i, num in enumerate(sorted_nums):
+            if num not in tem_dic: # 对于那些相同的数，因为之前已经存了，所以不会多次存
+                tem_dic[num] = i
+        for i, num in enumerate(nums):
+            res.append(tem_dic.get(num, 0))
 
         return res
 
+
+nums = [8,1,2,2,3]
+
+print(Solution().smallerNumbersThanCurrent(nums))
