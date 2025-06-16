@@ -10,18 +10,14 @@ from typing import List
 
 class Solution:
     def winningPlayerCount(self, n: int, pick: List[List[int]]) -> int:
-        from collections import defaultdict
-        tem_map = defaultdict(lambda: defaultdict(int))
-        res = 0
+        ls = [[0] * 11 for _ in range(n)]  # 因为题目中明确给了 y 是 0 到 10 之间
+        res = set()
+        # 可以使用二维数组来记录玩家的情况
         for x, y in pick:
-            if not tem_map[x][y]:
-                tem_map[x][y] = 0
-            tem_map[x][y] += 1
-        for user, dic in tem_map.items():
-            yi = max(dic.values())
-            if yi > user:
-                res += 1
-        return res
+            ls[x][y] += 1
+            if ls[x][y] > x:
+                res.add(x)
+        return len(res)
 
 n = 4
 pick = [[0,0],[1,0],[1,0],[2,1],[2,1],[2,0]]
