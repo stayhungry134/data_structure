@@ -9,20 +9,11 @@ Description: https://leetcode.cn/problems/find-the-original-typed-string-i/descr
 
 class Solution:
     def possibleStringCount(self, word: str) -> int:
-        pre_c = word[0]
-        res_ls = []
-        tem_cnt = 0
-        for c in word[1:]:
-            # 如果当前单词与它前一个单词相同
-            if c == pre_c:
-                tem_cnt += 1
-            else:
-                if tem_cnt > 0:
-                    res_ls.append(tem_cnt)
-                    tem_cnt = 0
-            pre_c = c
-        res_ls.append(tem_cnt)
-        return sum(res_ls) + 1
+        res = 1
+        for i in range(1, len(word)):
+            if word[i] == word[i-1]:
+                res += 1
+        return res
 
 
 word = "abbcccc"
