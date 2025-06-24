@@ -10,14 +10,11 @@ from typing import List
 
 class Solution:
     def duplicateNumbersXOR(self, nums: List[int]) -> int:
-        tem_map = {}
-        for num in nums:
-            if num not in tem_map:
-                tem_map[num] = 1
-            else:
-                tem_map[num] += 1
+        from collections import Counter
+        tem_map = Counter(nums)
         res = 0
-        for i in [k for k, v in tem_map.items() if v == 2]:
+        tem_ls = [k for k, v in tem_map.items() if v == 2]
+        for i in tem_ls:
             res = res ^ i
 
         return res
