@@ -10,16 +10,15 @@ from typing import List
 
 class Solution:
     def findIntersectionValues(self, nums1: List[int], nums2: List[int]) -> List[int]:
-        from collections import Counter
-        count_1 = Counter(nums1)
-        count_2 = Counter(nums2)
-
-        res = [0, 0]
-
-        for num1 in count_1.keys():
-            if num1 in count_2:
-                res[0] += count_1[num1]
-        for num2 in count_2.keys():
-            if num2 in count_1:
-                res[1] += count_2[num2]
-        return res
+        # set 也是属于哈希表实现，它只有键，没有值，操作更快
+        s1 = set(nums1)
+        s2 = set(nums2)
+        a1 = 0
+        a2 = 0
+        for num1 in nums1:
+            if num1 in s2:
+                a1 += 1
+        for num2 in nums2:
+            if num2 in s1:
+                a2 += 1
+        return [a1, a2]
