@@ -7,6 +7,7 @@ Description: 编写一个函数来查找字符串数组中的最长公共前缀�
 
 如果不存在公共前缀，返回空字符串 ""
 """
+from typing import List
 
 """
 心得: 
@@ -57,7 +58,33 @@ def longest_common_prefix(strs: list[str]) -> str:
 # result = longest_common_prefix(strs)
 # print(result)
 
+
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        if len(strs) == 0:
+            return ""
+        if len(strs) == 1:
+            return strs[0]
+        tem_str = strs[0]
+        res = []
+        flag = 0
+        for i, c in enumerate(tem_str):
+            try:
+                flag = len(res)
+                res.append(c)
+                for _str in strs:
+                    if _str[i] != res[flag]:
+                        res.pop()
+                        return "".join(res)
+                    continue
+            except IndexError as e:
+                res.pop()
+                return "".join(res)
+
+        return "".join(res)
+
+
 #
-strs = ["a","b"]
-print(longest_common_prefix(strs))
+strs = ["flower","flower","flower","flower"]
+print(Solution().longestCommonPrefix(strs))
 
