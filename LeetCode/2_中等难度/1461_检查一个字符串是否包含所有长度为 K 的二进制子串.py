@@ -16,6 +16,20 @@ class Solution:
         print(tem_set)
         return len(tem_set) >= 1 << k
 
+class Solution1:
+    def hasAllCodes(self, s: str, k: int) -> bool:
+        need = 1 << k  # 2^k
+        seen = set()
+        cur = 0
+        for i in range(len(s)):
+            cur = ((cur << 1) & ((1 << k) - 1)) | int(s[i])
+            if i >= k - 1:
+                seen.add(cur)
+                if len(seen) == need:
+                    return True
+        return False
+
+
 s = "00110"
 k = 2
 print(Solution().hasAllCodes(s, k))
