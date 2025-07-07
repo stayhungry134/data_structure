@@ -13,7 +13,7 @@ class Solution:
         n = len(nums1)
         set1 = set(nums1)
         set2 = set(nums2)
-        set_all = set(nums1 + nums2)
+        set_all = set1 | set2
 
         res1 =  min(n // 2, len(set1)) + min(n // 2, len(set2))
         return min(res1, len(set_all))
