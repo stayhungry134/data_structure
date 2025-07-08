@@ -9,13 +9,13 @@ Description: https://leetcode.cn/problems/check-balanced-string/
 
 class Solution:
     def isBalanced(self, num: str) -> bool:
-        ls1 = []
-        ls2 = []
+        sum1 = 0
+        sum2 = 0
         for i in range(len(num)):
-            if i % 2 == 0:
-                ls1.append(int(num[i]))
+            if i % 2:
+                sum1 += int(num[i])
             else:
-                ls2.append(int(num[i]))
+                sum2 += int(num[i])
 
-        return sum(ls1) == sum(ls2)
+        return sum1 == sum2
 
