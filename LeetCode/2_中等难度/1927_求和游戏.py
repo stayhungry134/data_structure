@@ -9,25 +9,21 @@ Description: https://leetcode.cn/problems/sum-game/description/
 
 class Solution:
     def sumGame(self, num: str) -> bool:
-        len_n = len(num)
-        left_sum = 0
-        right_sum = 0
-        left_q = 0
-        right_q = 0
-        half = len_n // 2
-        for i, n in enumerate(num):
-            if n.isdigit():
-                if i < half:
-                    left_sum += int(n)
-                else:
-                    right_sum += int(n)
+        all_q = num.count('?')
+        if all_q % 2 == 1:
+            return True
+        half = len(num) // 2
+        left_sum = right_sum = 0
+        left_q = right_q = 0
+        for n in num[:half]:
+            if n != '?':
+                left_sum += int(n)
             else:
-                if i < half:
-                    left_q += 1
-                else:
-                    right_q += 1
+                left_q += 1
+        for n in num[half:]:
+            if n != '?':
+                right_sum += int(n)
+            else:
+                right_q += 1
 
-        diff = left_sum - right_sum
-
-        return diff * 2 != (right_q - left_q) * 9
-
+        return (left_sum - right_sum) * 2 != (right_q - left_q) * 9
