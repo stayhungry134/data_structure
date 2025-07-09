@@ -12,7 +12,7 @@ class Solution:
     def decode(self, encoded: List[int], first: int) -> List[int]:
         res = [first]
         for i in encoded:
-            item = i ^ res[-1]
-            res.append(item)
+            first = i ^ first
+            res.append(first)
 
         return res
